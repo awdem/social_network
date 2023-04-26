@@ -26,4 +26,14 @@ RSpec.describe AccountRepository do
     expect(accounts[-1].email_address).to eq 'Larry@gmail.com'
     expect(accounts[-1].username).to eq 'Larry'    
   end
+
+  it "find and returns a single account by searching its id" do
+    accounts = AccountRepository.new
+
+    account = accounts.find_by_id(1)
+    
+    expect(account.id).to eq 1
+    expect(account.email_address).to eq 'David@gmail.com'
+    expect(account.username).to eq 'David'    
+  end
 end
