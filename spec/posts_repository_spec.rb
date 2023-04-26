@@ -102,7 +102,7 @@ describe PostRepository do
     expect(all_posts.first.id).to eq 2    
   end
 
-  xit 'fails to delete a non-existent record' do
+  it 'fails to delete a non-existent record' do
     posts = PostRepository.new
     expect{ posts.delete_by_id(6) }.to raise_error "Post does not exist."
   end

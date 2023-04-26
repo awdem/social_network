@@ -40,6 +40,7 @@ class PostRepository
   end
 
   def delete_by_id(id)
+    existence_check = find_by_id(id)
     sql = 'DELETE FROM posts WHERE id = $1;'
     DatabaseConnection.exec_params(sql, [id])
     return nil
