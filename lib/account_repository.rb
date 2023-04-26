@@ -1,3 +1,5 @@
+require_relative 'account'
+
 class AccountRepository
 
   def all

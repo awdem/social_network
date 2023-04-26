@@ -23,7 +23,7 @@ RSpec.describe AccountRepository do
     expect(accounts[0].username).to eq 'David'
     
     expect(accounts[-1].id).to eq 5
-    expect(accounts[-1].name).to eq 'Larry@gmail.com'
-    expect(accounts[-1].cohort_name).to eq 'Larry'    
+    expect(accounts[-1].email_address).to eq 'Larry@gmail.com'
+    expect(accounts[-1].username).to eq 'Larry'    
   end
 end
