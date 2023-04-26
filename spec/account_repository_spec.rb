@@ -36,4 +36,21 @@ RSpec.describe AccountRepository do
     expect(account.email_address).to eq 'David@gmail.com'
     expect(account.username).to eq 'David'    
   end
+
+  it "creates a new record in the database" do
+    accounts = AccountRepository.new
+
+    new_account = Account.new 
+    
+    new_account.email_address = 'Will@gmail.com'
+    new_account.username = 'Will'
+    
+    accounts.create(new_account)
+    
+    latest_account = accounts.all.last
+    
+    expect(latest_account.id).to eq 6
+    expect(latest_account.email_address).to eq 'Will@gmail.com'
+    expect(latest_account.username).to eq 'Will'    
+  end
 end

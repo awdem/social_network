@@ -13,7 +13,6 @@ class AccountRepository
     end
 
     accounts
-    # returns an array of account objects for each record in database
   end
 
   def find_by_id(id)
@@ -24,7 +23,6 @@ class AccountRepository
     set_attributes(account, search_result)
 
     account
-    # returns a single account object with matching id    
   end
 
   def create(account)
