@@ -85,7 +85,7 @@ Define the attributes of your Model class. You can usually map the table columns
 
 class Post
 
-  attr_accessor :title, :content, :view_count, :post_id
+  attr_accessor :id, :title, :content, :view_count, :post_id
 end
 
 ```
@@ -226,17 +226,17 @@ This is so you get a fresh table contents every time you run the test suite.
 ```ruby
 # EXAMPLE
 
-# file: spec/student_repository_spec.rb
+# file: spec/post_repository_spec.rb
 
-def reset_students_table
+def reset_posts_table
   seed_sql = File.read('spec/seeds_posts.sql')
   connection = PG.connect({ host: '127.0.0.1', dbname: 'social_network_test' })
   connection.exec(seed_sql)
 end
 
-describe StudentRepository do
+describe PostRepository do
   before(:each) do 
-    reset_students_table
+    reset_posts_table
   end
 
   # (your tests will go here).

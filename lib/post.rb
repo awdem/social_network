@@ -1,4 +1,4 @@
 class Post
 
-  attr_accessor :title, :content, :view_count, :account_id
+  attr_accessor :id, :title, :content, :view_count, :account_id
 end

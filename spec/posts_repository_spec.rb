@@ -11,7 +11,7 @@ describe PostRepository do
     reset_posts_table
   end
 
-  xit 'returns all posts as an array of post objects' do
+  it 'returns all posts as an array of post objects' do
     posts = PostRepository.new
 
     posts = posts.all
