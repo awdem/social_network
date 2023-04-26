@@ -10,7 +10,7 @@ _Copy this recipe template to design and implement Model and Repository classes 
 Table: posts
 
 Columns:
-title | content | view_count | account_id
+title | content | view_count | post_id
 ```
 
 ## 2. Create Test SQL seeds
@@ -29,17 +29,17 @@ If seed data is provided (or you already created it), you can skip this step.
 -- so we can start with a fresh state.
 -- (RESTART IDENTITY resets the primary key)
 
-TRUNCATE TABLE posts, accounts RESTART IDENTITY; -- replace with your own table name.
+TRUNCATE TABLE posts, posts RESTART IDENTITY; -- replace with your own table name.
 
 -- Below this line there should only be `INSERT` statements.
 -- Replace these statements with your own seed data.
 
-INSERT INTO accounts (email_address, username) VALUES 
+INSERT INTO posts (email_address, username) VALUES 
 ('David@gmail.com', 'David'),
 ('John@gmail.com', 'John');
 
 
-INSERT INTO posts (title, content, view_count, account_id) VALUES 
+INSERT INTO posts (title, content, view_count, post_id) VALUES 
 ('title1', 'content1', 20, 1),
 ('title2', 'content2', 12, 1),
 ('title3', 'content3', 68, 1),
@@ -85,7 +85,7 @@ Define the attributes of your Model class. You can usually map the table columns
 
 class Post
 
-  attr_accessor :title, :content, :view_count, :account_id
+  attr_accessor :title, :content, :view_count, :post_id
 end
 
 ```
@@ -99,42 +99,37 @@ Your Repository class will need to implement methods for each "read" or "write" 
 Using comments, define the method signatures (arguments and return value) and what they do - write up the SQL queries that will be used by each method.
 
 ```ruby
-# EXAMPLE
-# Table name: students
+# Table name: posts
 
 # Repository class
-# (in lib/student_repository.rb)
+# (in lib/post_repository.rb)
+class PostRepository
 
-class StudentRepository
-
-  # Selecting all records
-  # No arguments
   def all
-    # Executes the SQL query:
-    # SELECT id, name, cohort_name FROM students;
-
-    # Returns an array of Student objects.
+    # sql = SELECT * FROM posts;
+    # returns an array of post objects for each record in database
   end
 
-  # Gets a single record by its ID
-  # One argument: the id (number)
-  def find(id)
-    # Executes the SQL query:
-    # SELECT id, name, cohort_name FROM students WHERE id = $1;
-
-    # Returns a single Student object.
+  def find_by_id(id)
+    # sql = SELECT id, title, content, view_count, post_id FROM posts where id = $1;
+    # returns a single post object with matching id    
   end
 
-  # Add more methods below for each operation you'd like to implement.
+  def create(post)
+    # sql = INSERT INTO posts (email_address, username) VALUES ($1, $2);
+    # returns nothing 
+  end
 
-  # def create(student)
-  # end
+  def update(post)
+    # sql = UPDATE posts SET title = $1, content = $2, view_count = $3, post_id = $4 WHERE id = $5; 
+    # returns nothing
+  end
 
-  # def update(student)
-  # end
+  def delete_by_id(id)
+    # sql = DELETE FROM posts WHERE id = $1;
+    # returns nothing
+  end
 
-  # def delete(student)
-  # end
 end
 ```
 
@@ -145,37 +140,79 @@ Write Ruby code that defines the expected behaviour of the Repository class, fol
 These examples will later be encoded as RSpec tests.
 
 ```ruby
-# EXAMPLES
+posts = PostRepository.new
 
-# 1
-# Get all students
+posts = posts.all
 
-repo = StudentRepository.new
+posts.length # =>  5
 
-students = repo.all
+posts[0].id # =>  1
+posts[0].title # => 'title1'
+posts[0].content # => 'content1'
+posts[0].account_id # => 1
 
-students.length # =>  2
+posts[-1].id # =>  5
+posts[-1].title # => 'title5'
+posts[-1].content # => 'content5'
+posts[-1].account_id # => 2
 
-students[0].id # =>  1
-students[0].name # =>  'David'
-students[0].cohort_name # =>  'April 2022'
-
-students[1].id # =>  2
-students[1].name # =>  'Anna'
-students[1].cohort_name # =>  'May 2022'
 
 # 2
-# Get a single student
+# Get a single post
 
-repo = StudentRepository.new
+posts = PostRepository.new
 
-student = repo.find(1)
+post = posts.find(1)
 
-student.id # =>  1
-student.name # =>  'David'
-student.cohort_name # =>  'April 2022'
+post.id # =>  1
+post.title # => 'title1'
+post.content # => 'content1'
+post.account_id # => 1
 
-# Add more examples for each method
+# 3 - create and add a new post to the database
+
+posts = PostRepository.new
+
+new_post = post.new 
+
+new_post.title = 'new_title'
+new_post.content = 'new_content'
+new_post.account_id = 2
+
+posts.create(new_post)
+
+latest_post = posts.all.last
+
+latest_post.title # => 'new_title'
+latest_post.content # => 'new_content'
+latest_post.account_id # => 2
+
+# 4 - update an existing post in the database
+posts = PostRepository.new
+
+old_post = posts.find_by_id(1)
+
+old_post.title = 'new_title'
+old_post.content = 'new_content'
+old_post.account_id = 2
+
+posts.update(old_post)
+
+updated_record = posts.find_by_id(1)
+
+old_post.title # => 'new_title'
+old_post.content # => 'new_content'
+old_post.account_id # => 2
+
+# 5 - delete a post in the database
+
+posts = PostRepository.new
+
+posts.delete_by_id(1)
+
+all_posts = posts.all
+all_posts.length # => 4
+all_posts.first.id # => 2
 ```
 
 Encode this example as a test.
@@ -192,8 +229,8 @@ This is so you get a fresh table contents every time you run the test suite.
 # file: spec/student_repository_spec.rb
 
 def reset_students_table
-  seed_sql = File.read('spec/seeds_students.sql')
-  connection = PG.connect({ host: '127.0.0.1', dbname: 'students' })
+  seed_sql = File.read('spec/seeds_posts.sql')
+  connection = PG.connect({ host: '127.0.0.1', dbname: 'social_network_test' })
   connection.exec(seed_sql)
 end
 
