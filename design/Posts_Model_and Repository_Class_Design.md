@@ -83,7 +83,7 @@ Define the attributes of your Model class. You can usually map the table columns
 # Model class
 # (in lib/post.rb)
 
-class Student
+class Post
 
   attr_accessor :title, :content, :view_count, :account_id
 end

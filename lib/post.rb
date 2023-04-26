@@ -1,4 +1,4 @@
-class Student
+class Post
 
   attr_accessor :title, :content, :view_count, :account_id
 end
