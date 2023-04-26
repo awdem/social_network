@@ -19,6 +19,7 @@ class PostRepository
   def find_by_id(id)
     sql = 'SELECT id, title, content, view_count, account_id FROM posts where id = $1;'
     search_result = DatabaseConnection.exec_params(sql, [id]).first
+    fail 'Post does not exist.' if search_result.nil?
     post = Post.new
     set_attributes(post, search_result)
     post

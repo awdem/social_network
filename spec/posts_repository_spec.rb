@@ -44,9 +44,9 @@ describe PostRepository do
     expect(post.account_id).to eq 1    
   end
 
-  xit 'fails to find a non-existent post' do
-    accounts = PostRepository.new
-    expect{ post.find_by_id(6) }.to raise_error 'Post does not exist.'
+  it 'fails to find a non-existent post' do
+    posts = PostRepository.new
+    expect{ posts.find_by_id(6) }.to raise_error 'Post does not exist.'
   end
 
   xit 'creates and adds a post to the database' do
