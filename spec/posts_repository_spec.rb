@@ -92,14 +92,14 @@ describe PostRepository do
 
 # fails to update an existing post given an account_id that doesn't exist?
 
-  xit 'deletes a post in the database' do
+  it 'deletes a post in the database' do
     posts = PostRepository.new
 
     posts.delete_by_id(1)
     
     all_posts = posts.all
-    all_posts.length # => 4
-    all_posts.first.id # => 2    
+    expect(all_posts.length).to eq 4
+    expect(all_posts.first.id).to eq 2    
   end
 
   xit 'fails to delete a non-existent record' do
