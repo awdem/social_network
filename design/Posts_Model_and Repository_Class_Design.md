@@ -4,19 +4,13 @@ _Copy this recipe template to design and implement Model and Repository classes 
 
 ## 1. Design and create the Table
 
-If the table is already created in the database, you can skip this step.
-
-Otherwise, [follow this recipe to design and create the SQL schema for your table](./single_table_design_recipe_template.md).
-
-*In this template, we'll use an example table `students`*
-
 ```
-# EXAMPLE
 
-Table: students
+
+Table: posts
 
 Columns:
-id | name | cohort_name
+title | content | view_count | account_id
 ```
 
 ## 2. Create Test SQL seeds
@@ -35,13 +29,23 @@ If seed data is provided (or you already created it), you can skip this step.
 -- so we can start with a fresh state.
 -- (RESTART IDENTITY resets the primary key)
 
-TRUNCATE TABLE students RESTART IDENTITY; -- replace with your own table name.
+TRUNCATE TABLE posts, accounts RESTART IDENTITY; -- replace with your own table name.
 
 -- Below this line there should only be `INSERT` statements.
 -- Replace these statements with your own seed data.
 
-INSERT INTO students (name, cohort_name) VALUES ('David', 'April 2022');
-INSERT INTO students (name, cohort_name) VALUES ('Anna', 'May 2022');
+INSERT INTO accounts (email_address, username) VALUES 
+('David@gmail.com', 'David'),
+('John@gmail.com', 'John');
+
+
+INSERT INTO posts (title, content, view_count, account_id) VALUES 
+('title1', 'content1', 20, 1),
+('title2', 'content2', 12, 1),
+('title3', 'content3', 68, 1),
+('title4', 'content4', 1000, 2),
+('title5', 'content5', 123, 2);
+
 ```
 
 Run this SQL file on the database to truncate (empty) the table, and insert the seed data. Be mindful of the fact any existing records in the table will be deleted.
