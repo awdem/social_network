@@ -129,7 +129,7 @@ These examples will later be encoded as RSpec tests.
 
 accounts = AccountRepository.new
 
-accounts = account.all
+accounts = accounts.all
 
 accounts.length # =>  5
 
@@ -146,7 +146,7 @@ accounts[-1].cohort_name # =>  'Larry'
 
 accounts = AccountRepository.new
 
-account = account.find(1)
+account = accounts.find(1)
 
 account.id # =>  1
 account.email_address # =>  'David@gmail.com'

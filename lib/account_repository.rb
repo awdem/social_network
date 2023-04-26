@@ -1,7 +1,19 @@
 class AccountRepository
 
   def all
-    # sql = SELECT * FROM accounts;
+    accounts = []
+    sql = 'SELECT * FROM accounts;'
+    result_set = DatabaseConnection.exec_params(sql, [])
+    result_set.each do |record|
+      account = Account.new
+      account.id = record["id"].to_i
+      account.email_address = record["email_address"]
+      account.username = record["username"]
+      
+      accounts << account
+    end
+
+    accounts
     # returns an array of account objects for each record in database
   end
 
