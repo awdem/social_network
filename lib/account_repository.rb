@@ -1,5 +1,4 @@
 require_relative 'account'
-
 class AccountRepository
 
   def all
@@ -19,9 +18,8 @@ class AccountRepository
     account = Account.new
     sql = 'SELECT id, email_address, username FROM accounts where id = $1;'
     search_result = DatabaseConnection.exec_params(sql, [id]).first
-
+    fail 'Account does not exist.' if search_result.to_a.empty?
     set_attributes(account, search_result)
-
     account
   end
 

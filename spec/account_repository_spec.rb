@@ -39,8 +39,7 @@ RSpec.describe AccountRepository do
 
   it 'fails to find a non-existent account' do
     accounts = AccountRepository.new
-
-    expect{ account = accounts.find_by_id(1) }.to raise_error 'Account does not exist.'
+    expect{ account = accounts.find_by_id(6) }.to raise_error 'Account does not exist.'
   end
   it "creates a new record in the database" do
     accounts = AccountRepository.new
