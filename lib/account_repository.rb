@@ -38,10 +38,11 @@ class AccountRepository
     DatabaseConnection.exec_params(sql, params)
     return nil
   end
-
+  
   def delete_by_id(id)
-    # sql = DELETE FROM accounts WHERE id = $1;
-    # returns nothing
+    sql = 'DELETE FROM accounts WHERE id = $1;'
+    DatabaseConnection.exec_params(sql, [id])
+    return nil
   end
 
 

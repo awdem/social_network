@@ -70,4 +70,14 @@ RSpec.describe AccountRepository do
     expect(updated_record.email_address).to eq "newemail@gmail.com"
     expect(updated_record.username).to eq "new name"  
   end
+
+  it 'deletes an existing record' do
+    accounts = AccountRepository.new
+
+    accounts.delete_by_id(1)
+    
+    all_accounts = accounts.all
+    expect(all_accounts.first.id).to eq 2    
+    expect(all_accounts.length).to eq 4
+  end
 end
