@@ -31,10 +31,12 @@ class AccountRepository
     DatabaseConnection.exec_params(sql, params)
     return nil
   end
-
+  
   def update(account)
-    # sql = UPDATE accounts SET email_addres = $1, username = $2 WHERE id = $3; 
-    # returns nothing
+    sql = 'UPDATE accounts SET email_address = $1, username = $2 WHERE id = $3;'
+    params = [account.email_address, account.username, account.id]
+    DatabaseConnection.exec_params(sql, params)
+    return nil
   end
 
   def delete_by_id(id)

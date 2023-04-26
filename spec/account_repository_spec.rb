@@ -53,4 +53,21 @@ RSpec.describe AccountRepository do
     expect(latest_account.email_address).to eq 'Will@gmail.com'
     expect(latest_account.username).to eq 'Will'    
   end
+
+
+  it 'updates an existing record' do
+    accounts = AccountRepository.new
+
+    old_account = accounts.find_by_id(1)
+    
+    old_account.email_address = "newemail@gmail.com"
+    old_account.username = "new name"
+    
+    accounts.update(old_account)
+    
+    updated_record = accounts.find_by_id(1)
+    
+    expect(updated_record.email_address).to eq "newemail@gmail.com"
+    expect(updated_record.username).to eq "new name"  
+  end
 end
