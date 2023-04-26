@@ -63,13 +63,13 @@ Usually, the Model class name will be the capitalised table name (single instead
 # Table name: students
 
 # Model class
-# (in lib/student.rb)
-class Student
+# (in lib/post.rb)
+class Post
 end
 
 # Repository class
-# (in lib/student_repository.rb)
-class StudentRepository
+# (in lib/post_repository.rb)
+class PostRepository
 end
 ```
 
