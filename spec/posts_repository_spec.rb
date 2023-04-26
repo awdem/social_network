@@ -16,17 +16,19 @@ describe PostRepository do
 
     posts = posts.all
     
-    posts.length # =>  5
+    expect(posts.length) # =>  5
     
-    posts[0].id # =>  1
-    posts[0].title # => 'title1'
-    posts[0].content # => 'content1'
-    posts[0].account_id # => 1
+    expect(posts[0].id).to eq  1
+    expect(posts[0].title).to eq 'title1'
+    expect(posts[0].content).to eq 'content1'
+    expect(posts[0].view_count).to eq 20
+    expect(posts[0].account_id).to eq 1
     
-    posts[-1].id # =>  5
-    posts[-1].title # => 'title5'
-    posts[-1].content # => 'content5'
-    posts[-1].account_id # => 2    
+    expect(posts[-1].id).to eq  5
+    expect(posts[-1].title).to eq 'title5'
+    expect(posts[-1].content).to eq 'content5'
+    expect(posts[-1].view_count).to eq 123
+    expect(posts[-1].account_id).to eq 2    
   end
 
   it 'finds a single post by id' do
@@ -34,10 +36,12 @@ describe PostRepository do
 
     post = posts.find_by_id(3)
     
-    post.id # =>  3
-    post.title # => 'title3'
-    post.content # => 'content3'
-    post.account_id # => 1    
+    expect(post.id).to eq 3
+    expect(post.title).to eq 'title3'
+    expect(post.content).to eq 'content3'
+    expect(post.view_count).to eq 68
+
+    expect(post.account_id).to eq 1    
   end
 
   xit 'fails to find a non-existent post' do

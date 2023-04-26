@@ -43,10 +43,11 @@ class PostRepository
   private
 
   def set_attributes(post, record)
-    post.id = record["id"]
+    post.id = record["id"].to_i
     post.title = record["title"]
-    post.content = record["contents"]
-    post.account_id = record["account_id"]
+    post.content = record["content"]
+    post.view_count = record['view_count'].to_i
+    post.account_id = record["account_id"].to_i
   end
 
 end
