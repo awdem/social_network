@@ -49,41 +49,45 @@ describe PostRepository do
     expect{ posts.find_by_id(6) }.to raise_error 'Post does not exist.'
   end
 
-  xit 'creates and adds a post to the database' do
+  it 'creates and adds a post to the database' do
     posts = PostRepository.new
 
-    new_post = post.new 
+    new_post = Post.new 
     
     new_post.title = 'new_title'
     new_post.content = 'new_content'
+    new_post.view_count = 100
     new_post.account_id = 2
     
     posts.create(new_post)
     
     latest_post = posts.all.last
     
-    latest_post.title # => 'new_title'
-    latest_post.content # => 'new_content'
-    latest_post.account_id # => 2    
+    expect(latest_post.title).to eq 'new_title'
+    expect(latest_post.content).to eq 'new_content'
+    expect(latest_post.account_id).to eq 2 
+    expect(latest_post.view_count).to eq 100   
   end
 # fails to create post given an account_id that doesn't exist?
 
-  xit 'updates an existing post in the database' do
+  it 'updates an existing post in the database' do
     posts = PostRepository.new
 
     old_post = posts.find_by_id(1)
     
     old_post.title = 'new_title'
     old_post.content = 'new_content'
+    old_post.view_count = 0
     old_post.account_id = 2
     
     posts.update(old_post)
     
     updated_record = posts.find_by_id(1)
     
-    old_post.title # => 'new_title'
-    old_post.content # => 'new_content'
-    old_post.account_id # => 2    
+    expect(updated_record.title).to eq 'new_title'
+    expect(updated_record.content).to eq 'new_content'
+    expect(updated_record.view_count).to eq 0
+    expect(updated_record.account_id).to eq 2    
   end
 
 # fails to update an existing post given an account_id that doesn't exist?

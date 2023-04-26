@@ -26,13 +26,17 @@ class PostRepository
   end
 
   def create(post)
-    # sql = INSERT INTO posts (email_address, username) VALUES ($1, $2);
-    # returns nothing 
+    sql = 'INSERT INTO posts (title, content, view_count, account_id) VALUES ($1, $2, $3, $4);'
+    params = [post.title, post.content, post.view_count, post.account_id]
+    DatabaseConnection.exec_params(sql, params)
+    return nil
   end
 
   def update(post)
-    # sql = UPDATE posts SET title = $1, content = $2, view_count = $3, post_id = $4 WHERE id = $5; 
-    # returns nothing
+    sql = 'UPDATE posts SET title = $1, content = $2, view_count = $3, account_id = $4 WHERE id = $5;' 
+    params = [post.title, post.content, post.view_count, post.account_id, post.id]
+    DatabaseConnection.exec_params(sql, params)
+    return nil
   end
 
   def delete_by_id(id)
