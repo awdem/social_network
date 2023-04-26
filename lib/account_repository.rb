@@ -26,8 +26,10 @@ class AccountRepository
   end
 
   def create(account)
-    # sql = INSERT INTO accounts (email_address, username) VALUES ($1, $2);
-    # returns nothing 
+    sql = 'INSERT INTO accounts (email_address, username) VALUES ($1, $2);'
+    params = [account.email_address, account.username]
+    DatabaseConnection.exec_params(sql, params)
+    return nil
   end
 
   def update(account)
