@@ -80,4 +80,10 @@ RSpec.describe AccountRepository do
     expect(all_accounts.first.id).to eq 2    
     expect(all_accounts.length).to eq 4
   end
+
+  it 'fails to delete a non-existent record' do
+    accounts = AccountRepository.new
+
+    expect{ accounts.delete_by_id(1) }.to raise_error "Account does not exist"
+  end
 end
