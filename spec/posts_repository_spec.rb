@@ -29,14 +29,14 @@ describe PostRepository do
     posts[-1].account_id # => 2    
   end
 
-  xit 'finds a single post by id' do
+  it 'finds a single post by id' do
     posts = PostRepository.new
 
-    post = posts.find(1)
+    post = posts.find_by_id(3)
     
-    post.id # =>  1
-    post.title # => 'title1'
-    post.content # => 'content1'
+    post.id # =>  3
+    post.title # => 'title3'
+    post.content # => 'content3'
     post.account_id # => 1    
   end
 

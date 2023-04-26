@@ -17,8 +17,11 @@ class PostRepository
   end
 
   def find_by_id(id)
-    # sql = SELECT id, title, content, view_count, post_id FROM posts where id = $1;
-    # returns a single post object with matching id    
+    sql = 'SELECT id, title, content, view_count, account_id FROM posts where id = $1;'
+    search_result = DatabaseConnection.exec_params(sql, [id]).first
+    post = Post.new
+    set_attributes(post, search_result)
+    post
   end
 
   def create(post)
