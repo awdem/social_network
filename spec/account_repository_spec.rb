@@ -16,7 +16,7 @@ RSpec.describe AccountRepository do
 
     accounts = accounts.all
     
-    accounts.length # =>  5
+    expect(accounts.length).to eq  5
     
     expect(accounts[0].id).to eq 1
     expect(accounts[0].email_address).to eq 'David@gmail.com'
