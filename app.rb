@@ -1,16 +1,17 @@
-# # file: app.rb
-
-# require_relative 'lib/database_connection'
-
+require_relative 'lib/database_connection'
+require_relative 'lib/post_repository'
 # # We need to give the database name to the method `connect`.
-# DatabaseConnection.connect('music_library')
+DatabaseConnection.connect('social_network_test')
 
-# # Perform a SQL query on the database and get the result set.
-# sql = 'SELECT id, title FROM albums;'
-# result = DatabaseConnection.exec_params(sql, [])
+database = PostRepository.new
+new_post = Post.new
 
-# # Print out each record from the result set .
-# result.each do |record|
-#   p record
-# end
+new_post.title = "title"
+new_post.content = "content"
+new_post.view_count = 50
+new_post.account_id = 3
+
+
+database.create(new_post)
+
 
