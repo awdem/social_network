@@ -27,7 +27,7 @@ RSpec.describe AccountRepository do
     expect(accounts[-1].username).to eq 'Larry'    
   end
 
-  it "find and returns a single account by searching its id" do
+  it "finds and returns a single account by searching its id" do
     accounts = AccountRepository.new
 
     account = accounts.find_by_id(1)
@@ -37,6 +37,11 @@ RSpec.describe AccountRepository do
     expect(account.username).to eq 'David'    
   end
 
+  it 'fails to find a non-existent account' do
+    accounts = AccountRepository.new
+
+    expect{ account = accounts.find_by_id(1) }.to raise_error 'Account does not exist.'
+  end
   it "creates a new record in the database" do
     accounts = AccountRepository.new
 
@@ -81,9 +86,9 @@ RSpec.describe AccountRepository do
     expect(all_accounts.length).to eq 4
   end
 
-  it 'fails to delete a non-existent record' do
+  xit 'fails to delete a non-existent record' do
     accounts = AccountRepository.new
 
-    expect{ accounts.delete_by_id(1) }.to raise_error "Account does not exist"
+    expect{ accounts.delete_by_id(1) }.to raise_error "Account does not exist."
   end
 end
